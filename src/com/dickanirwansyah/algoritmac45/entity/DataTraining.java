@@ -13,29 +13,29 @@ import com.stripbandunk.jwidget.annotation.TableColumn;
  */
 public class DataTraining {
     
-    private String idtraining;
-    @TableColumn(name = "Nama", number = 1, size = 30)
+    private int idtraining;
+    @TableColumn(name = "Nama", number = 1, size = 15)
     private String nama;
     
-    @TableColumn(name = "Rumah", number = 2, size = 30)
+    @TableColumn(name = "Rumah", number = 2, size = 15)
     private String rumah;
     
-    @TableColumn(name = "Jumlah Kendaraan", number = 3, size = 35)
+    @TableColumn(name = "Jumlah Kendaraan", number = 3, size = 20)
     private String jumlah_kendaraan;
     
-    @TableColumn(name = "Penghasilan Ortu", number = 4, size = 35)
+    @TableColumn(name = "Penghasilan Ortu", number = 4, size = 20)
     private String penghasilan_orangtua;
     
-    @TableColumn(name = "Pekerjaan Ortu", number = 5, size = 35)
+    @TableColumn(name = "Pekerjaan Ortu", number = 5, size = 20)
     private String pekerjaan_orangtua;
     
-    @TableColumn(name = "Jumlah saudara kandung", number = 6, size = 40)
+    @TableColumn(name = "Jumlah saudara kandung", number = 6, size = 20)
     private String jumlah_saudarakandung;
     
-    @TableColumn(name = "Nilai Rapot", number = 7, size = 35)
+    @TableColumn(name = "Nilai Rapot", number = 7, size = 15)
     private String nilai_rapot;
     
-    @TableColumn(name = "Kelayakan", number = 8, size = 30)
+    @TableColumn(name = "Kelayakan", number = 8, size = 15)
     private String kelayakan;
     
     
@@ -95,11 +95,11 @@ public class DataTraining {
         this.rumah = rumah;
     }
     
-    public String getIdtraining(){
+    public int getIdtraining(){
         return idtraining;
     }
     
-    public void setIdtraining(String idtraining){
+    public void setIdtraining(int idtraining){
         this.idtraining = idtraining;
     }
     
