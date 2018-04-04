@@ -5,6 +5,7 @@
  */
 package com.dickanirwansyah.algoritmac45.panel;
 
+import com.dickanirwansyah.algoritmac45.controller.ControllerC45;
 import com.dickanirwansyah.algoritmac45.dao.DataTrainingDaoImpl;
 import com.dickanirwansyah.algoritmac45.entity.DataTraining;
 import com.dickanirwansyah.algoritmac45.helper.ExcelHelper;
@@ -17,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
+import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -31,13 +33,16 @@ public class PanelTraining extends javax.swing.JPanel {
     private TabelModelDataTraining dataTraining;
     private ExcelHelper excelHelper;
     private JFileChooser chooserSelected = new JFileChooser();
+    private ControllerC45 c45;
     int contAction = 0;
     File file;
     
     public PanelTraining() {
         initComponents();
+        c45 = new ControllerC45();
         progressBarTraining.setVisible(false);
         progressBarTraining.setVisible(false);
+        txtHasilAnalisia.setEnabled(false);
         daoImpl = new DataTrainingDaoImpl();
         excelHelper = new ExcelHelper();
         loadDataTraining();
@@ -86,12 +91,32 @@ public class PanelTraining extends javax.swing.JPanel {
         return btnImportTraining;
     }
     
+    //controller dynamic tabel 
     public JDynamicTable getDynamicDataTraining(){
         return tabel_data_training;
     }
     
+    //controller progress bar
     public JProgressBar getProgressbar(){
         return progressBarTraining;
+    }
+    
+    //controller text area
+    public JTextArea getTextArea(){
+        return txtHasilAnalisia;
+    }
+    
+    //controller button
+    public JButton getButtonAnalisaData(){
+        return btnAnalisaData;
+    }
+    
+    public JButton getButtonEntropyGain(){
+        return btnEntropyGain;
+    }
+    
+    public JButton getButtonPohonKeputusan(){
+        return btnTampilkanPohon;
     }
    
     
@@ -112,10 +137,13 @@ public class PanelTraining extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel_hasil_perhitungan = new com.stripbandunk.jwidget.JDynamicTable();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtHasilAnalisia = new javax.swing.JTextArea();
         jPanel4 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnAnalisaData = new javax.swing.JButton();
+        btnEntropyGain = new javax.swing.JButton();
+        btnTampilkanPohon = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -191,32 +219,58 @@ public class PanelTraining extends javax.swing.JPanel {
 
         jScrollPane1.setViewportView(tabel_hasil_perhitungan);
 
+        jLabel5.setText("Hasil Analisa Data");
+
+        txtHasilAnalisia.setColumns(20);
+        txtHasilAnalisia.setRows(5);
+        txtHasilAnalisia.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+        jScrollPane3.setViewportView(txtHasilAnalisia);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3)
                 .addContainerGap())
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton3.setText("Hitung Total Kasus");
-        jPanel4.add(jButton3);
+        btnAnalisaData.setText("Analisa Data");
+        btnAnalisaData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnalisaDataActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnAnalisaData);
 
-        jButton4.setText("Hitung Entropy dan Gain");
-        jPanel4.add(jButton4);
+        btnEntropyGain.setText("Hitung Entropy dan Gain");
+        btnEntropyGain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntropyGainActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnEntropyGain);
 
-        jButton5.setText("Tampilkan Pohon");
-        jPanel4.add(jButton5);
+        btnTampilkanPohon.setText("Tampilkan Pohon");
+        jPanel4.add(btnTampilkanPohon);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -301,24 +355,37 @@ public class PanelTraining extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnAnalisaDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalisaDataActionPerformed
+        // analisa data
+        c45.analisaData(this);
+    }//GEN-LAST:event_btnAnalisaDataActionPerformed
+
+    private void btnEntropyGainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntropyGainActionPerformed
+        // entropy dan gain
+        c45.hitungEntropyDanGain(this);
+    }//GEN-LAST:event_btnEntropyGainActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private paket.launk.java.container.BluePanel bluePanel1;
+    private javax.swing.JButton btnAnalisaData;
+    private javax.swing.JButton btnEntropyGain;
     public javax.swing.JButton btnImportTraining;
+    private javax.swing.JButton btnTampilkanPohon;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JProgressBar progressBarTraining;
     private com.stripbandunk.jwidget.JDynamicTable tabel_data_training;
     private com.stripbandunk.jwidget.JDynamicTable tabel_hasil_perhitungan;
+    private javax.swing.JTextArea txtHasilAnalisia;
     // End of variables declaration//GEN-END:variables
 }
