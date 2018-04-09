@@ -357,6 +357,7 @@ public class PanelTraining extends javax.swing.JPanel {
 
     private void btnAnalisaDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalisaDataActionPerformed
         // analisa data
+        JOptionPane.showMessageDialog(null, "data berhasil di analisa");
         c45.analisaData(this);
     }//GEN-LAST:event_btnAnalisaDataActionPerformed
 

@@ -213,13 +213,13 @@ public class DataTrainingDaoImpl implements DataTrainingDao{
         return total_kasus_tidak;
     }
 
-    //menghitung total rumah
+    //menghitung total rumah milik sendiri
     @Override
     public int hitungTotalRumahMilikSendiri() {
         PreparedStatement statement = null;
         ResultSet rs = null;
         int totalRumahMilikSendiri = 0;
-        String sql = "select count(*) as countere from tabel_data_training where rumah='kontrak'";
+        String sql = "select count(*) as countere from tabel_data_training where rumah='milik sendiri'";
         try {
             statement=connection.prepareStatement(sql);
             rs=statement.executeQuery();

@@ -279,7 +279,7 @@ public class ControllerC45 {
     public double hitungEntropyDanGain(PanelTraining training){
         
          //menghitung total kasus
-        double total_kasus = trainingDaoImpl.hitungTotalKasus();
+        int total_kasus = trainingDaoImpl.hitungTotalKasus();
                 
         //menghitung total kasus ya
         double total_kasus_ya = trainingDaoImpl.hitungtotalKasusYa();
@@ -434,6 +434,7 @@ public class ControllerC45 {
         //menghitung total kasus nilai rapot [kurang - Tidak]
         double total_nilaiRapotKurangTidak = trainingDaoImpl.hitungTotalRapotKurangTidak();
         
+        //=====PROSES ALGORITMA C4.5==========#
         
         //#============ENTROPY TOTAL=============#
         double entropyTotal = 0.0;
@@ -447,7 +448,10 @@ public class ControllerC45 {
         System.out.println("CALCULATE_TOTAL_TIDAK ="+ calculate_total_tidak);
         System.out.println("RESULT ENTROPY TOTAL ="+entropyTotal);
         //#============ENTROPY TOTAL============#
-        
+       
+        /**
+         * RUMAH
+         */
         //#=========ENTROPY RUMAH [KONTRAK] ============#
         double entropyRumahKontrak = 0.0;
         double kontrak_ya = total_rumah_kontrakYa / total_rumah_kontrak;
@@ -457,11 +461,42 @@ public class ControllerC45 {
                 (-(total_rumah_kontrakTidak / total_rumah_kontrak) * prosesLogaritma(kontrak_tidak));
         
         System.out.println("RESULT ENTROPY RUMAH [KONTRAK] = "+entropyRumahKontrak);
-        System.out.println("CALCULATE_KONTRAK_YA = "+kontrak_ya);
-        System.out.println("CALCULATE_KONTRAK_TIDAK = "+kontrak_tidak);
+        System.out.println("CALCULATE KONTRAK (YA) = "+kontrak_ya);
+        System.out.println("CALCULATE KONTRAK (TIDAK) = "+kontrak_tidak);
         //#==========ENTROPY RUMAH [KONTRAK] ===========#
         
-        return total_kasus;
+        //#========ENTROPY RUMAH [MILIK SENDIRI]===========#
+        double entropyRumahMilikSendiri = 0.0;
+        double milik_sendiri_ya = total_rumah_miliksendiriYa / total_rumah_miliksendiri;
+        double milik_sendiri_tidak = total_rumah_miliksendiriTidak / total_rumah_miliksendiri;
         
+        entropyRumahMilikSendiri = (-(total_rumah_miliksendiriYa / total_rumah_miliksendiri) * prosesLogaritma(milik_sendiri_ya)) +
+                (-(total_rumah_miliksendiriTidak / total_rumah_miliksendiri) * prosesLogaritma(milik_sendiri_tidak));
+        
+        
+        System.out.println("RESULT ENTROPY RUMAH [MILIK SENDIRI] = "+entropyRumahMilikSendiri);
+        System.out.println("CALCULATE RUMAH MILIK SENDIRI (YA) = "+milik_sendiri_ya);
+        System.out.println("CALCULATE RUMAH MILIK SENDIRI (TIDAK) = "+milik_sendiri_tidak);
+        
+       ///#=====ENTROPY RUMAH [MILIK SENDIRI]==============#
+       
+       //#============GAIN RUMAH====================#\\
+       double totalGainRumah = 0.0;
+       double totalHimpunan = 0.0;
+       totalHimpunan = ((total_rumah_miliksendiri / total_kasus) * entropyRumahMilikSendiri) +
+               ((total_rumah_kontrak / total_kasus)* entropyRumahKontrak);
+       
+       totalGainRumah = entropyTotal - totalHimpunan;
+       //#============GAIN RUMAH====================#\\
+        
+       JOptionPane.showMessageDialog(null, "Total Kasus = "+total_kasus+
+               "\n"+"Entropy Total = "+entropyTotal+"\n"+
+               "Entropy Rumah [Milik Sendiri] = "+entropyRumahMilikSendiri+"\n"+
+               "Entropy Rumah [Kontrak] = "+entropyRumahKontrak+"\n"+
+               "Gain [Rumah] = "+totalGainRumah);
+        
+        System.out.println("Total Himpunan = "+totalHimpunan+"\n"+
+                "Nilai Gain [Rumah] = "+totalGainRumah);
+        return total_kasus;
     }
 }
